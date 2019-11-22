@@ -5,13 +5,14 @@ import { increment } from "./actions"
 
 class App extends Component {
     render() {
-        const { dispatch } = this.props;
+        const { add } = this.props;
+        // console.log(this.props);
         return (
             <div className="container">
                 <h1 className="jumbotron-heading text-center">{ this.props.counter} </h1>
                 <p className="text-center">
-                    <button onClick={() =>dispatch(increment("zhuofan"))} className="btn btn-primary mr-2">Increase</button>
-                    <button onClick={() =>dispatch({type: "DECREMENT"})} className="btn btn-danger my-2">Decrease</button>
+                    <button onClick={() => add("zhuofan")} className="btn btn-primary mr-2">Increase</button>
+                    <button className="btn btn-danger my-2">Decrease</button>
                 </p>
             </div>
         );
@@ -24,8 +25,14 @@ const mapStateToProps = (state) => { //state ==> store.getState() get state from
     };
 };
 
+const mapDispatchToProps = (dispatch) => {
+    return {
+        add:(name) => {dispatch(increment(name))}
+    }
+};
+
 App.propTypes = {
     counter: PropTypes.number.isRequired
 }
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(App);
